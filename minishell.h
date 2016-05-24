@@ -6,7 +6,7 @@
 /*   By: fkoehler <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/26 14:48:31 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/05/22 18:05:01 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/05/24 17:30:35 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,8 @@ int					binary_cmd(t_env *env_lst, char **env_tab, char **cmd);
 int					builtins_cmd(t_env *env_lst, char **cmd);
 
 int					ft_cd(char **cmd, t_env *env);
-int					ft_env(char **cmd, t_env *env_lst,
-					t_env *env_lst_cpy, int i);
-int					ft_setenv(char **cmd, t_env **env_lst);
+int					ft_env(char **cmd, t_env *env_lst, int i);
+int					ft_setenv(char **cmd, t_env **env_lst, int flag);
 int					ft_unsetenv(char **cmd, t_env *env_lst);
 int					ft_exit(char **cmd);
 

@@ -6,7 +6,7 @@
 /*   By: fkoehler <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/26 16:09:47 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/05/22 17:47:40 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/05/24 17:33:28 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,17 @@ int		builtins_cmd(t_env *env_lst, char **cmd)
 {
 	char	*tmp;
 	char	**env_tab;
-	t_env	*env_lst_cpy;
 
 	env_tab = NULL;
-	env_lst_cpy = NULL;
 	tmp = cmd[0];
 	cmd[0] = strdup_remove_quotes(cmd[0]);
 	free(tmp);
 	if (ft_strcmp(cmd[0], "cd") == 0)
 		ft_cd(cmd, env_lst);
 	else if (ft_strcmp(cmd[0], "env") == 0)
-		ft_env(cmd, env_lst, env_lst_cpy, 1);
+		ft_env(cmd, env_lst, 1);
 	else if (ft_strcmp(cmd[0], "setenv") == 0)
-		ft_setenv(++cmd, &env_lst);
+		ft_setenv(++cmd, &env_lst, 0);
 	else if (ft_strcmp(cmd[0], "unsetenv") == 0)
 		ft_unsetenv(cmd, env_lst);
 	else if (ft_strcmp(cmd[0], "exit") == 0)
@@ -97,10 +95,7 @@ int		read_cmd(t_shell *shell)
 		i = 0;
 		cmd_line = ft_strsplit(line, ';');
 		while (cmd_line[i])
-		{
-			parse_cmd(shell->env_lst, cmd_line[i]);
-			i++;
-		}
+			parse_cmd(shell->env_lst, cmd_line[i++]);
 		free_tab(cmd_line);
 		free(line);
 		g_prompt = get_prompt(shell->env_lst);

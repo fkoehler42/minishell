@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/03 13:02:52 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/05/22 16:29:01 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/05/24 17:21:23 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ int		check_bin_path(t_env *env_lst, char **env_tab, char **cmd)
 	char	**paths;
 
 	i = 0;
+	j = 0;
 	paths = get_paths(env_lst);
 	while (paths[i])
 	{

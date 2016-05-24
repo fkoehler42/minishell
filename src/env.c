@@ -6,7 +6,7 @@
 /*   By: fkoehler <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/26 20:56:41 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/05/22 17:47:13 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/05/24 17:42:43 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,14 @@ static int	put_env(t_env *env_lst)
 			ft_putendl(tmp->value);
 			tmp = tmp->next;
 		}
-		free_env_lst(&env_lst);
 	}
+	return (0);
+}
+
+static int	del_env_cpy(t_env **env_lst)
+{
+	if ((*env_lst) != NULL)
+		free_env_lst(env_lst);
 	return (0);
 }
 
@@ -60,12 +66,15 @@ static int	parse_env_flags(char **cmd, t_env **env_lst)
 			return (env_cmd_error(0, (*cmd)[2]));
 		free_env_lst(env_lst);
 	}
-	else if ((*cmd)[1] == 'u' && (*cmd)[2])
-		del_env_var(*env_lst, strdup_remove_quotes(*cmd + 2));
 	else if ((*cmd)[1] == 'u' && *(cmd + 1))
 	{
-		del_env_var(*env_lst, strdup_remove_quotes(*(cmd + 1)));
-		return (2);
+			del_env_var(*env_lst, strdup_remove_quotes(*(cmd + 1)));
+			return (2);
+	}
+	else if ((*cmd)[1] == 'u' && (*cmd)[2])
+	{
+		del_env_var(*env_lst, strdup_remove_quotes(*cmd + 2));
+		return (1);
 	}
 	else if ((*cmd)[1] == 'u' && !(*(cmd + 1)))
 		return (env_cmd_error(1, 'u'));
@@ -74,10 +83,12 @@ static int	parse_env_flags(char **cmd, t_env **env_lst)
 	return (1);
 }
 
-int			ft_env(char **cmd, t_env *env_lst, t_env *env_lst_cpy, int i)
+int		ft_env(char **cmd, t_env *env_lst, int i)
 {
 	int		j;
+	t_env	*env_lst_cpy;
 
+	env_lst_cpy = NULL;
 	dup_env_lst(env_lst, &env_lst_cpy);
 	while (cmd[i])
 	{
@@ -85,20 +96,18 @@ int			ft_env(char **cmd, t_env *env_lst, t_env *env_lst_cpy, int i)
 		if (cmd[i][0] == '-')
 		{
 			if ((j = parse_env_flags(cmd + i, &env_lst_cpy)) == -1)
-			{
-				free_env_lst(&env_lst_cpy);
-				return (-1);
-			}
+				return (del_env_cpy(&env_lst_cpy));
 		}
-		else if (ft_strchr(cmd[i], '=') && ++j)
-			ft_setenv(&cmd[i], &env_lst_cpy);
+		else if (ft_strchr(cmd[i], '=') != NULL && ++j)
+			ft_setenv(&cmd[i], &env_lst_cpy, 1);
 		else
 		{
 			j = builtins_cmd(env_lst_cpy, cmd + i);
-			free_env_lst(&env_lst_cpy);
-			return (j);
+			return (del_env_cpy(&env_lst_cpy));
 		}
 		i += j;
 	}
-	return (put_env(env_lst_cpy));
+	env_lst_cpy != NULL ? put_env(env_lst_cpy) : (0);
+	free_env_lst(&env_lst_cpy);
+	return (0);
 }
