@@ -6,7 +6,7 @@
 /*   By: fkoehler <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/26 20:56:41 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/05/22 18:03:08 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/05/24 18:45:48 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,24 @@ static int	free_path_error_return(char *path)
 {
 	free(path);
 	return (-1);
+}
+
+static void	put_pwd(t_env *home, char *path)
+{
+	int		i;
+
+	i = 0;
+	if (!home || !home->value[0])
+		ft_putendl(path);
+	else
+	{
+		while (home->value[i] && path[i] && home->value[i] == path[i])
+			i++;
+		if (!home->value[i])
+			ft_printf("~%s\n", path + i);
+		else
+			ft_putendl(path);
+	}
 }
 
 int			ft_cd(char **cmd, t_env *env_lst)
@@ -36,6 +54,8 @@ int			ft_cd(char **cmd, t_env *env_lst)
 		return (free_path_error_return(path));
 	if (chdir(path) != 0)
 		return (free_path_error_return(path));
+	if (ft_strcmp(cmd[1], "-") == 0)
+		put_pwd(home, path);
 	if (set_new_pwd(env_lst) == -1)
 		return (free_path_error_return(path));
 	free(path);
