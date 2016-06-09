@@ -6,7 +6,7 @@
 /*   By: fkoehler <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/26 16:09:47 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/05/24 17:33:28 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/06/09 10:39:00 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,9 @@ int		binary_cmd(t_env *env_lst, char **env_tab, char **cmd)
 
 int		builtins_cmd(t_env *env_lst, char **cmd)
 {
-	char	*tmp;
 	char	**env_tab;
 
 	env_tab = NULL;
-	tmp = cmd[0];
-	cmd[0] = strdup_remove_quotes(cmd[0]);
-	free(tmp);
 	if (ft_strcmp(cmd[0], "cd") == 0)
 		ft_cd(cmd, env_lst);
 	else if (ft_strcmp(cmd[0], "env") == 0)
@@ -71,11 +67,24 @@ int		builtins_cmd(t_env *env_lst, char **cmd)
 
 int		parse_cmd(t_env *env_lst, char *cmd)
 {
+	int		i;
+	char	*tmp;
 	char	**cmd_tab;
 
+	i = 0;
+	tmp = NULL;
 	cmd_tab = strsplit_blanks_and_quotes(cmd);
 	if (cmd_tab[0])
+	{
+		while (cmd_tab[i])
+		{
+			tmp = cmd_tab[i];
+			cmd_tab[i] = strdup_remove_quotes(cmd_tab[i]);
+			free(tmp);
+			i++;
+		}
 		builtins_cmd(env_lst, cmd_tab);
+	}
 	free_tab(cmd_tab);
 	return (0);
 }

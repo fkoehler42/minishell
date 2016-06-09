@@ -6,7 +6,7 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#    Updated: 2016/05/21 20:38:34 by fkoehler         ###   ########.fr        #
+#    Updated: 2016/06/09 12:04:05 by fkoehler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,18 +44,21 @@ OBJ = $(SRC:.c=.o)
 all: $(NAME)
 
 $(NAME): $(LIB) $(OBJ)
-		gcc -g $(FLAGS) $(OBJ) -L$(LIBDIR) -lft -o $@
+		@gcc -g $(FLAGS) $(OBJ) -L$(LIBDIR) -lft -o $@
+		@echo "\033[0;32mMinishell compilation done !"
 
 $(LIB):
-	make -C $(LIBDIR)
+	@make -C $(LIBDIR)
 
 %.o: %.c
-	gcc -g $(FLAGS) -c $< -I . -I $(INCLUDES)
+	@gcc -g $(FLAGS) -c $< -I . -I $(INCLUDES)
 
 clean:
-	rm -f $(OBJ)
+	@rm -f $(OBJ)
+	@echo "\033[0;32mObject files deleted !"
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
+	@echo "\033[0;32mExecutable deleted !"
 
 re: fclean all

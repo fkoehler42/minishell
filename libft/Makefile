@@ -6,7 +6,7 @@
 #    By: fkoehler <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/02 18:34:40 by fkoehler          #+#    #+#              #
-#    Updated: 2016/05/09 12:10:20 by fkoehler         ###   ########.fr        #
+#    Updated: 2016/06/09 12:03:07 by fkoehler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,16 +44,19 @@ OBJ = $(SRC:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	ar rc $(NAME) $(OBJ)
-	ranlib $(NAME)
+	@ar rc $(NAME) $(OBJ)
+	@ranlib $(NAME)
+	@echo "\033[0;32mLibft compilation done !"
 
 %.o: %.c
-	gcc $(FLAGS) -I ./includes -c $<
+	@gcc $(FLAGS) -I ./includes -c $<
 
 clean:
-	rm -f $(OBJ)
+	@rm -f $(OBJ)
+	@echo "\033[0;32mObject files deleted !"
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
+	@echo "\033[0;32m$(NAME) deleted !"
 
 re: fclean all
