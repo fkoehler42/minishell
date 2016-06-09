@@ -6,7 +6,7 @@
 /*   By: fkoehler <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/26 20:56:41 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/06/09 12:07:59 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/06/09 20:20:34 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,15 +66,15 @@ static int	parse_env_flags(char **cmd, t_env **env_lst)
 			return (env_cmd_error(0, (*cmd)[2]));
 		free_env_lst(env_lst);
 	}
-	else if ((*cmd)[1] == 'u' && *(cmd + 1))
-	{
-		del_env_var(*env_lst, strdup_remove_quotes(*(cmd + 1)));
-		return (2);
-	}
 	else if ((*cmd)[1] == 'u' && (*cmd)[2])
 	{
 		del_env_var(*env_lst, strdup_remove_quotes(*cmd + 2));
 		return (1);
+	}
+	else if ((*cmd)[1] == 'u' && *(cmd + 1))
+	{
+		del_env_var(*env_lst, strdup_remove_quotes(*(cmd + 1)));
+		return (2);
 	}
 	else if ((*cmd)[1] == 'u' && !(*(cmd + 1)))
 		return (env_cmd_error(1, 'u'));

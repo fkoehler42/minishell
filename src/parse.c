@@ -6,7 +6,7 @@
 /*   By: fkoehler <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/26 16:09:47 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/06/09 10:39:00 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/06/09 18:20:50 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int		builtins_cmd(t_env *env_lst, char **cmd)
 	char	**env_tab;
 
 	env_tab = NULL;
+	/* ft_print_array(cmd); */
 	if (ft_strcmp(cmd[0], "cd") == 0)
 		ft_cd(cmd, env_lst);
 	else if (ft_strcmp(cmd[0], "env") == 0)
