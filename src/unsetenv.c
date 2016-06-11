@@ -6,13 +6,13 @@
 /*   By: fkoehler <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/26 20:56:41 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/06/09 20:20:30 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/06/11 14:44:08 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		ft_unsetenv(char **cmd, t_env *env_lst)
+int		ft_unsetenv(char **cmd, t_env **env_lst)
 {
 	int		i;
 	char	*dup_var;
@@ -37,19 +37,19 @@ int		ft_unsetenv(char **cmd, t_env *env_lst)
 	return (0);
 }
 
-int		del_env_var(t_env *env_lst, char *var)
+int		del_env_var(t_env **env_lst, char *var)
 {
 	t_env	*tmp1;
 	t_env	*tmp2;
 
-	if (!(tmp1 = env_lst))
+	if (!(tmp1 = *env_lst))
 	{
 		free(var);
 		return (-1);
 	}
 	if (ft_strcmp(tmp1->var, var) == 0)
 	{
-		env_lst = tmp1->next;
+		*env_lst = tmp1->next;
 		free_env_var(tmp1);
 		free(var);
 		return (0);

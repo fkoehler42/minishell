@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/28 15:13:48 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/06/09 19:18:52 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/06/11 17:15:21 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ int		error(int errnum)
 	if (errnum == 0)
 		ft_putstr_fd("malloc: error on memory allocation\n", 2);
 	else if (errnum == 1)
-		ft_putstr_fd("fork: error on child proccess creation\n", 2);
+		ft_putstr_fd("fork: error on child process creation\n", 2);
 	else if (errnum == 2)
-		ft_putstr_fd("execve: error on child proccess execution\n", 2);
+		ft_putstr_fd("execve: error on child process execution\n", 2);
 	else if (errnum == 3)
 		ft_putstr_fd("minishell: error on read execution\n", 2);
 	else if (errnum == 4)

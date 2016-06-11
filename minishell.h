@@ -6,7 +6,7 @@
 /*   By: fkoehler <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/26 14:48:31 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/05/24 17:30:35 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/06/11 17:39:36 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,14 @@ void				handle_sigint(int signum);
 void				handle_sigint2(int signum);
 
 int					parse_env_var(t_env **env_lst, char *env_var);
-int					dup_env_lst(t_env *env_lst, t_env **env_lst_cpy);
+int					dup_env_lst(t_env **env_lst, t_env **env_lst_cpy);
 int					check_env_var(char *env_var, char *cmd);
 t_env				*get_env_var(t_env *env_lst, char *var);
 int					store_env_var(t_env **env_lst, char *var, char *value);
-int					del_env_var(t_env *env_lst, char *var);
+int					del_env_var(t_env **env_lst, char *var);
 char				**make_env_tab(t_env *env_lst);
 int					read_cmd(t_shell *shell);
-int					parse_cmd(t_env *env, char *cmd);
+int					parse_cmd(t_env **env, char *cmd);
 
 int					check_path(char *path);
 int					set_new_pwd(t_env *env_lst);
@@ -66,12 +66,12 @@ int					check_bin_access(char **env_tab,
 					char *bin_path, char **cmd);
 int					check_bin_path(t_env *env_lst, char **env_tab, char **cmd);
 int					binary_cmd(t_env *env_lst, char **env_tab, char **cmd);
-int					builtins_cmd(t_env *env_lst, char **cmd);
+int					builtins_cmd(t_env **env_lst, char **cmd);
 
 int					ft_cd(char **cmd, t_env *env);
 int					ft_env(char **cmd, t_env *env_lst, int i);
 int					ft_setenv(char **cmd, t_env **env_lst, int flag);
-int					ft_unsetenv(char **cmd, t_env *env_lst);
+int					ft_unsetenv(char **cmd, t_env **env_lst);
 int					ft_exit(char **cmd);
 
 void				free_env_var(t_env *env_var);

@@ -6,7 +6,7 @@
 /*   By: fkoehler <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/26 16:09:47 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/06/09 18:20:50 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/06/11 16:03:11 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,31 +42,30 @@ int		binary_cmd(t_env *env_lst, char **env_tab, char **cmd)
 	return (0);
 }
 
-int		builtins_cmd(t_env *env_lst, char **cmd)
+int		builtins_cmd(t_env **env_lst, char **cmd)
 {
 	char	**env_tab;
 
 	env_tab = NULL;
-	/* ft_print_array(cmd); */
 	if (ft_strcmp(cmd[0], "cd") == 0)
-		ft_cd(cmd, env_lst);
+		ft_cd(cmd, *env_lst);
 	else if (ft_strcmp(cmd[0], "env") == 0)
-		ft_env(cmd, env_lst, 1);
+		ft_env(cmd, *env_lst, 1);
 	else if (ft_strcmp(cmd[0], "setenv") == 0)
-		ft_setenv(++cmd, &env_lst, 0);
+		ft_setenv(++cmd, env_lst, 0);
 	else if (ft_strcmp(cmd[0], "unsetenv") == 0)
 		ft_unsetenv(cmd, env_lst);
 	else if (ft_strcmp(cmd[0], "exit") == 0)
 		ft_exit(cmd);
 	else
 	{
-		env_tab = make_env_tab(env_lst);
-		return (binary_cmd(env_lst, env_tab, cmd));
+		env_tab = make_env_tab(*env_lst);
+		return (binary_cmd(*env_lst, env_tab, cmd));
 	}
 	return (0);
 }
 
-int		parse_cmd(t_env *env_lst, char *cmd)
+int		parse_cmd(t_env **env_lst, char *cmd)
 {
 	int		i;
 	char	*tmp;
@@ -105,7 +104,7 @@ int		read_cmd(t_shell *shell)
 		i = 0;
 		cmd_line = ft_strsplit(line, ';');
 		while (cmd_line[i])
-			parse_cmd(shell->env_lst, cmd_line[i++]);
+			parse_cmd((&shell->env_lst), cmd_line[i++]);
 		free_tab(cmd_line);
 		free(line);
 		g_prompt = get_prompt(shell->env_lst);
